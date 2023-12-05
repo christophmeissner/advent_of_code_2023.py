@@ -1,3 +1,3 @@
 def read_lines(filename):
-    with open("input.txt") as inputfile:
+    with open(filename) as inputfile:
         return list(l.strip() for l in inputfile)
