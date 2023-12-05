@@ -4,6 +4,7 @@ from utils import read_lines
 
 is_digit = lambda s: s in string.digits
 is_symbol = lambda s: not is_digit(s) and s != "."
+is_gear = lambda s: s == "*"
 
 assert is_symbol("$") is True
 assert is_digit("$") is False
@@ -60,7 +61,26 @@ def part1():
 
 
 def part2():
-    return 0
+    lines = read_lines("input.txt")
+    gears = dict()
+    for y, line in enumerate(lines):
+        current_number = 0
+        gear = None
+        for x, char in enumerate(line + "."):
+            if is_digit(char):
+                current_number = current_number * 10 + int(char)
+                if not gear:
+                    gear = is_connected((x, y), lines, is_gear)
+            elif not current_number == 0:
+                if gear:
+                    number_list = gears.get(gear, [])
+                    number_list.append(current_number)
+                    gears[gear] = number_list
+                current_number = 0
+                gear = None
+    return sum(
+        map(lambda g: g[0] * g[1], filter(lambda v: len(v) == 2, gears.values()))
+    )
 
 
 if __name__ == "__main__":
