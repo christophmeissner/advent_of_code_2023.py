@@ -20,6 +20,7 @@ def part1(filename="input.txt"):
     for line in utils.read_lines(filename):
         digits = list(filter(lambda c: c.isdigit(), line))
         answer += int(digits[0]) * 10 + int(digits[-1])
+    print(f"part 1 for {filename}: {answer}")
     return answer
 
 
@@ -66,12 +67,13 @@ def part2(filename="input.txt"):
                     if line[character_index:].startswith(digit_word):
                         found_numbers.append(digit_word_index)
         answer += found_numbers[0] * 10 + found_numbers[-1]
+    print(f"part 2 for {filename}: {answer}")
     return answer
 
 
 if __name__ == "__main__":
     assert part1("example1.txt") == 142
-    print(f"part 1: {part1()}")
+    assert part1() == 54940
 
     assert part2("example2.txt") == 281
-    print(f"part 2: {part2()} == 54208")
+    assert part2() == 54208

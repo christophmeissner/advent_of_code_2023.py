@@ -16,7 +16,7 @@ def hand_order(hand, jokers=False):
             most_common_card = items[0][0]
         else:
             # when hand == "JJJJJ", counter will have no more cards after popping
-            most_common_card = card_order[-1]
+            most_common_card = card_order[-1]  # replace with 5 aces!!
         counter[most_common_card] += joker_count
     return sorted(counter.values(), reverse=True) + [card_order.index(c) for c in hand]
 

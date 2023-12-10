@@ -3,22 +3,14 @@ from utils import batched, offset_range, read_lines
 
 def make_mapping(dest, source, length):
     def mapping(value):
-        # print(dest, source, length)
         if source <= value < source + length:
             return value - (source - dest)
 
-    mapping.lenght = length
-    mapping.offset = -(source - dest)
-    mapping.dest = range(dest, dest + length)
-    mapping.source = range(source, source + length)
-    mapping.source_min = source
-    mapping.source_max = source + length - 1
     return mapping
 
 
 def part1(filename="input.txt"):
     lines = read_lines(filename)
-    answer = 0
     seeds = list(map(int, lines[0].split()[1:]))
     stages = []
     current_stage = []
@@ -47,7 +39,7 @@ def part1(filename="input.txt"):
         # print(f"seed = {seed} -> {output}")
 
     answer = min(locations)
-    print(f"part1 for {filename}: {answer}")
+    print(f"part 1 for {filename}: {answer}")
     return answer
 
 
@@ -110,7 +102,7 @@ def part2(filename="input.txt"):
         seed_ranges = stage.remap_ranges(seed_ranges)
 
     result = min(map(lambda i: i[0].start, seed_ranges.items()))
-    print(f"part2 for {filename}: {result}")
+    print(f"part 2 for {filename}: {result}")
     return result
 
 

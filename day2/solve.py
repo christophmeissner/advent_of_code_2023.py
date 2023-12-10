@@ -20,6 +20,7 @@ def part1(filename="input.txt"):
             break
         else:
             answer += game
+    print(f"part 1 for {filename}: {answer}")
     return answer
 
 
@@ -31,12 +32,13 @@ def part2(filename="input.txt"):
             for ball_count, color in [c.split() for c in round.split(", ")]:
                 max_colors[color] = max(max_colors[color], int(ball_count))
         answer += functools.reduce(lambda a, b: a * b, max_colors.values())
+    print(f"part 2 for {filename}: {answer}")
     return answer
 
 
 if __name__ == "__main__":
     assert part1("example1.txt") == 8
-    print(f"part 1: {part1()}")
+    assert part1() == 2348
 
     assert part2("example2.txt") == 2286
-    print(f"part 2: {part2()}")
+    assert part2() == 76008

@@ -38,7 +38,7 @@ def part2(filename="input.txt"):
 
 if __name__ == "__main__":
     assert part1("example1.txt") == 13
-    part1()
+    assert part1() == 32609
 
     assert part2("example2.txt") == 30
-    part2()
+    assert part2() == 14624680

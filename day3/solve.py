@@ -87,7 +87,6 @@ def part2(filename="input.txt"):
 
 if __name__ == "__main__":
     assert part1("example1.txt") == 4361
-    part1()
-
+    assert part1() == 540025
     assert part2("example2.txt") == 467835
-    part2()
+    assert part2() == 84584891
