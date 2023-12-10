@@ -20,6 +20,23 @@ def offset_range(range_in, offset):
     return range(range_in.start + offset, range_in.stop + offset)
 
 
+def merge_ranges(*ranges):
+    if not ranges:
+        return []
+    result = []
+    ranges = sorted(ranges, key=lambda r: (r.start, r.start - r.stop), reverse=True)
+    first = ranges.pop()
+    while len(ranges):
+        popped = ranges.pop()
+        if popped.start <= first.stop:
+            first = range(first.start, max(first.stop, popped.stop))
+        else:
+            result.append(first)
+            first = popped
+    result.append(first)
+    return result
+
+
 class perf_timer:
     def __init__(self, name=None, verbose=False):
         self.name = name
