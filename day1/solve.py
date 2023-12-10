@@ -1,7 +1,7 @@
-import string
+import utils
 
 
-def part1():
+def part1(filename="input.txt"):
     """
     On each line, the calibration value can be found by combining the first digit and
     the last digit (in that order) to form a single two-digit number.
@@ -12,19 +12,18 @@ def part1():
     pqr3stu8vwx
     a1b2c3d4e5f
     treb7uchet
+
     In this example, the calibration values of these four lines are 12, 38, 15, and 77.
     Adding these together produces 142.
     """
-    with open("input.txt") as inputfile:
-        number = 0
-        for line in inputfile:
-            digits = list(filter(lambda c: c.isdigit(), line))
-            linenum = int(digits[0]) * 10 + int(digits[-1])
-            number += linenum
-        return number
+    answer = 0
+    for line in utils.read_lines(filename):
+        digits = list(filter(lambda c: c.isdigit(), line))
+        answer += int(digits[0]) * 10 + int(digits[-1])
+    return answer
 
 
-def part2():
+def part2(filename="input.txt"):
     """
     Your calculation isn't quite right. It looks like some of the digits are actually
     spelled out with letters: one, two, three, four, five, six, seven, eight, and nine
@@ -44,7 +43,8 @@ def part2():
     In this example, the calibration values are 29, 83, 13, 24, 42, 14, and 76. Adding
     these together produces 281.
     """
-    words = (
+    digit_words = (
+        "zero",
         "one",
         "two",
         "three",
@@ -55,26 +55,23 @@ def part2():
         "eight",
         "nine",
     )
-    digit_words = dict(zip(words + tuple(string.digits[1:]), string.digits[1:] * 2))
-
-    with open("input.txt") as inputfile:
-        number = 0
-        for line in (line.rstrip() for line in inputfile):
-            left, right = dict(), dict()
-            for d in digit_words.keys():
-                ridx = line.rfind(d)
-                if not ridx == -1:
-                    right[d] = ridx
-                lidx = line.find(d)
-                if not lidx == -1:
-                    left[d] = lidx
-            minleft = min(left, key=left.get)
-            maxright = max(right, key=right.get)
-            linenum = int(digit_words[minleft]) * 10 + int(digit_words[maxright])
-            number += linenum
-        return number
+    answer = 0
+    for line in utils.read_lines(filename):
+        found_numbers = []
+        for character_index, char in enumerate(line):
+            if char.isdigit():
+                found_numbers.append(int(char))
+            else:
+                for digit_word_index, digit_word in enumerate(digit_words[1:], start=1):
+                    if line[character_index:].startswith(digit_word):
+                        found_numbers.append(digit_word_index)
+        answer += found_numbers[0] * 10 + found_numbers[-1]
+    return answer
 
 
 if __name__ == "__main__":
+    assert part1("example1.txt") == 142
     print(f"part 1: {part1()}")
-    print(f"part 2: {part2()}")
+
+    assert part2("example2.txt") == 281
+    print(f"part 2: {part2()} == 54208")
